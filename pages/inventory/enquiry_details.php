@@ -1,4 +1,6 @@
-<?php session_start();
+<?php 
+error_reporting(1);
+session_start();
 if(empty($_SESSION['id'])):
 header('Location:../index.php');
 endif;
@@ -57,7 +59,7 @@ javascript:window.history.forward(1);
                 </div>
                 <div class="box-body">
                   <!-- Date range -->
-                  <form method="post" action="transaction_add.php">
+                  <form method="post" action="../transaction_add.php">
 				  <div class="row" style="min-height:400px">
 					
 					 <div class="col-md-4">
@@ -66,8 +68,8 @@ javascript:window.history.forward(1);
 							 
 								<select class="form-control select2" name="part_no" tabindex="1" autofocus required>
 								<?php
-                  $branch=$_SESSION['branch'];
-                  $sid=$_REQUEST['sid'];
+								  $branch=$_SESSION['branch'];
+								  $sid=$_REQUEST['sid'];
 								  include('../dist/includes/dbcon.php');
 									 $query2=mysqli_query($con,"select * from parts where branch_id='$branch' order by part_no")or die(mysqli_error());
 									    while($row=mysqli_fetch_array($query2)){
@@ -84,14 +86,14 @@ javascript:window.history.forward(1);
 							 
 								<select class="form-control select3" name="order_type" tabindex="" autofocus required>
 							<?php
-                  $branch=$_SESSION['branch'];
-                  $sid=$_REQUEST['sid'];
-								
-									 $query3=mysqli_query($con,"select * from order_type where branch_id='$branch' order by order_type_id")or die(mysqli_error());
-									    while($row1=mysqli_fetch_array($query3)){
-								?>
-										<option value="<?php echo $row1['order_type_id'];?>"><?php echo $row1['order_type'];?></option>
-								  <?php }?>
+						  $branch=$_SESSION['branch'];
+						  $sid=$_REQUEST['sid'];
+										
+								 $query3=mysqli_query($con,"select * from order_type order by order_type_id");
+									while($row1=mysqli_fetch_array($query3)){
+							?>
+									<option value="<?php echo $row1['order_type_id'];?>"><?php echo $row1['order_type'];?></option>
+							  <?php }?>
 								</select>
 						  </div>
 					</div> 
