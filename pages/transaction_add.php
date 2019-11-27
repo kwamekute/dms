@@ -1,33 +1,28 @@
 <?php 
 session_start();
 $id=$_SESSION['id'];
-$branch=$_SESSION['branch'];	
+$branch=$_SESSION['branch'];
+$partid = $_POST['part_no'];
+$order_typeid = $_POST['order_type'];
+$qty = $_POST['qty'];	
+$dt = date('Y-m-d');
 
 include('../dist/includes/dbcon.php');
-
-	$cid = $_POST['cid'];
-	$name = $_POST['prod_name'];
-	$qty = $_POST['qty'];
-		
-			
-		$query=mysqli_query($con,"select prod_price,prod_id from product where prod_id='$name'")or die(mysqli_error());
-		$row=mysqli_fetch_array($query);
-		$price=$row['prod_price'];
-		
-		$query1=mysqli_query($con,"select * from temp_trans where prod_id='$name' and branch_id='$branch'")or die(mysqli_error());
-		$count=mysqli_num_rows($query1);
-		
-		$total=$price*$qty;
-		
-		if ($count>0){
-			mysqli_query($con,"update temp_trans set qty=qty+'$qty',price=price+'$total' where prod_id='$name' and branch_id='$branch'")or die(mysqli_error());
 	
-		}
-		else{
-			mysqli_query($con,"INSERT INTO temp_trans(prod_id,qty,price,branch_id) VALUES('$name','$qty','$price','$branch')")or die(mysqli_error($con));
-		}
-
+	$query1=mysqli_query($con,"select * from temp_trans where part_id='$partid'");
+	$count=mysqli_num_rows($query1);
 	
-		echo "<script>document.location='cash_transaction.php?cid=$cid'</script>";  
+	
+	if ($count>0){
+		mysqli_query($con, "update temp_trans set qty=qty+'$qty' where part_id='$partid'");
+		echo "exists";
+	}
+	else{
+		mysqli_query($con,"INSERT INTO temp_trans(part_id,order_type_id,qty,date) 
+					VALUES('$partid','$order_typeid','$qty','$dt')");
+	}
+
+
+	echo "<script>document.location='inventory/enquiry_details.php'</script>";  
 	
 ?>

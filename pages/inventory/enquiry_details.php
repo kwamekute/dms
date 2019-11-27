@@ -27,7 +27,6 @@ endif;
     <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
     <script src="../../dist/js/jquery.min.js"></script>
     <script language="JavaScript"><!--
-javascript:window.history.forward(1);
 //--></script>
  </head>
   <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
@@ -66,7 +65,7 @@ javascript:window.history.forward(1);
 						  <div class="form-group">
 							<label for="date">Part No.</label>
 							 
-								<select class="form-control select2" name="part_no" tabindex="1" autofocus required>
+								<select class="form-control select2" name="part_no" id="part_no" tabindex="1" autofocus required>
 								<?php
 								  $branch=$_SESSION['branch'];
 								  $sid=$_REQUEST['sid'];
@@ -84,12 +83,12 @@ javascript:window.history.forward(1);
 						  <div class="form-group">
 							<label for="date">Order Type</label>
 							 
-								<select class="form-control select3" name="order_type" tabindex="" autofocus required>
+								<select class="form-control select3" name="order_type" id="order_type" tabindex="" autofocus required>
 							<?php
 						  $branch=$_SESSION['branch'];
 						  $sid=$_REQUEST['sid'];
 										
-								 $query3=mysqli_query($con,"select * from order_type order by order_type_id");
+								 $query3=mysqli_query($con,"select * from order_type where branch_id='$branch' order by order_type_id");
 									while($row1=mysqli_fetch_array($query3)){
 							?>
 									<option value="<?php echo $row1['order_type_id'];?>"><?php echo $row1['order_type'];?></option>
@@ -101,7 +100,7 @@ javascript:window.history.forward(1);
 						<div class="form-group">
 							<label for="date">Quantity</label>
 							<div class="input-group">
-							  <input type="number" class="form-control pull-right" id="date" name="qty" placeholder="Quantity" tabindex="2" value="1"  required>
+							  <input type="number" class="form-control pull-right" id="qty" name="qty" placeholder="Quantity" tabindex="2" value="1"  required>
 							</div><!-- /.input group -->
 						</div><!-- /.form group -->
 					 </div>
@@ -129,57 +128,58 @@ javascript:window.history.forward(1);
                       </tr>
                     </thead>
                     <tbody>
-<?php
-		
-		$query=mysqli_query($con,"select * from enquiry natural join parts natural join supplier where branch_id='$branch'")or die(mysqli_error());
-			$grand=0;
-		while($row=mysqli_fetch_array($query)){
-				$id=$row['temp_trans_id'];
-				$total= $row['qty']*$row['price'];
-				$grand=$grand+$total;
-		
-?>
+					<?php
+					
+					$query=mysqli_query($con,"Select temp_trans.temp_trans_id, temp_trans.qty, temp_trans.part_id, 
+										temp_trans.order_type_id, temp_trans.date, parts.part_name, parts.part_no, order_type.order_type 
+										from temp_trans  
+										LEFT JOIN parts ON temp_trans.part_id = parts.part_id
+										LEFT JOIN order_type ON temp_trans.order_type_id = order_type.order_type_id");
+						$grand=0;
+					while($row=mysqli_fetch_array($query)){
+							$id=$row['temp_trans_id'];
+					
+					?>
                       <tr >
 						<td><?php echo $row['qty'];?></td>
-            <td><img style="width:80px;height:60px" src="<?php echo URLROOT;?>/dist/uploads/<?php echo $row['part_pic'];?>"></td>
-            <td class="record"><?php echo $row['part_no'];?></td>
-                        <td class="record"><?php echo $row['part_name'];?></td>
-                        <td>
-							
+						<td></td>
+						<td class="record"><?php echo $row['part_no'];?></td>
+						<td class="record"><?php echo $row['part_name'];?></td>
+						<td class="record"><?php echo $row['order_type'];?></td>
+						<td class="record"><?php echo $row['date'];?></td>
+						<td>
 							<a href="#updateordinance<?php echo $row['temp_trans_id'];?>" data-target="#updateordinance<?php echo $row['temp_trans_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-edit text-blue"></i></a>
-
-              <a href="#delete<?php echo $row['temp_trans_id'];?>" data-target="#delete<?php echo $row['temp_trans_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-trash text-red"></i></a>
-              
+							<a href="#delete<?php echo $row['temp_trans_id'];?>" data-target="#delete<?php echo $row['temp_trans_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-trash text-red"></i></a>
+						  
 						</td>
                       </tr>
 					  <div id="updateordinance<?php echo $row['temp_trans_id'];?>" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-	<div class="modal-dialog">
-	  <div class="modal-content" style="height:auto">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Update Sales Details</h4>
-              </div>
-              <div class="modal-body">
-			  <form class="form-horizontal" method="post" action="transaction_update.php" enctype='multipart/form-data'>
-					<input type="hidden" class="form-control" name="cid" value="<?php echo $cid;?>" required>  	
-					<input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row['temp_trans_id'];?>" required>  
-				<div class="form-group">
-					<label class="control-label col-lg-3" for="price">Qty</label>
-					<div class="col-lg-9">
-					  <input type="text" class="form-control" id="price" name="qty" value="<?php echo $row['qty'];?>" required>  
-					</div>
-				</div>
-				
-              </div><br>
-              <div class="modal-footer">
-		            <button type="submit" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-			  </form>
-            </div>
-			
-        </div><!--end of modal-dialog-->
+					  <div class="modal-dialog">
+						<div class="modal-content" style="height:auto">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							  <span aria-hidden="true">×</span></button>
+							<h4 class="modal-title">Update Sales Details</h4>
+						  </div>
+						  <div class="modal-body">
+						  <form class="form-horizontal" method="post" action="../transaction_update.php" enctype='multipart/form-data'>
+								<input type="hidden" class="form-control" name="cid" value="<?php echo $row['temp_trans_id'];?>">  	  
+							<div class="form-group">
+								<label class="control-label col-lg-3" for="price">Qty</label>
+								<div class="col-lg-9">
+								  <input type="text" class="form-control" id="qty" name="qty" value="<?php echo $row['qty'];?>" required>  
+								</div>
+							</div>
+							
+						  </div><br>
+						  <div class="modal-footer">
+								<button type="submit" class="btn btn-primary">Save changes</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						  </div>
+						 </form>
+						</div>
+							
+					  </div><!--end of modal-dialog-->
  </div>
  <!--end of modal-->  
 <div id="delete<?php echo $row['temp_trans_id'];?>" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -192,9 +192,9 @@ javascript:window.history.forward(1);
               </div>
               <div class="modal-body">
         <form class="form-horizontal" method="post" action="transaction_del.php" enctype='multipart/form-data'>
-          <input type="hidden" class="form-control" name="cid" value="<?php echo $cid;?>" required>   
+          <input type="hidden" class="form-control" name="cid" value="<?php echo "cid" ;?>" required>   
           <input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row['temp_trans_id'];?>" required>  
-        <p>Are you sure you want to remove <?php echo $row['prod_name'];?>?</p>
+        <p>Are you sure you want to remove <?php echo $row['part_name'];?>?</p>
         
               </div><br>
               <div class="modal-footer">
