@@ -41,7 +41,7 @@ endif;
           <!-- Content Header (Page header) -->
           <section class="content-header">
             <h1>
-              <a class="btn btn-lg btn-warning" href="reorder.php">Back</a>
+              <a class="btn btn-lg btn-warning" href="<?php echo URLROOT;?>/pages/inventory/index.php">Back</a>
               <a class="btn btn-lg btn-info" href="newEnquiry.php">Make New Enquiry</a>
               <a class="btn btn-lg btn-success" href="request.php">View Purchase Requests</a>
             </h1>

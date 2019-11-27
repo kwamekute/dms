@@ -39,7 +39,7 @@ endif;
           <!-- Content Header (Page header) -->
           <section class="content-header">
             <h1>
-              <a class="btn btn-lg btn-warning" href="home.php">Back</a>
+              <a class="btn btn-lg btn-warning" href="<?php echo URLROOT;?>/pages/inventory/enquiry.php">Back</a>
               
             </h1>
             <ol class="breadcrumb">
@@ -54,7 +54,7 @@ endif;
              <div class="col-md-8">
               <div class="box box-primary">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Add New Supplier</h3>
+                  <h3 class="box-title">Enquiry | New Supplier</h3>
                 </div>
                 <div class="box-body">
                   <!-- Date range -->
@@ -103,7 +103,7 @@ endif;
             <div class="col-md-4">
               <div class="box box-primary">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Search Existing Supplier</h3>
+                  <h3 class="box-title">Enquiry | Existing Supplier</h3>
                 </div>
                 <div class="box-body">
                 
@@ -112,7 +112,7 @@ endif;
                   <div class="form-group">
                     <label for="date">Search Supplier Name</label>
                     <div class="input-group col-md-12">
-                      <select class="form-control select2" style="width: 100%;" name="cid" required>
+                      <select class="form-control select2" style="width: 100%;" name="sid" required>
                       <?php
                        include('../../dist/includes/dbcon.php');
                         $query2=mysqli_query($con,"select * from supplier where branch_id='$branch' order by supplier_name")or die(mysqli_error());
@@ -122,7 +122,10 @@ endif;
           <?php }?>
                     </select>
                     </div><!-- /.input group -->
-                  </div><!-- /.form group -->
+<br>
+<br>
+
+              
       
                   
                   <div class="form-group">

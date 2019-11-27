@@ -38,7 +38,7 @@ javascript:window.history.forward(1);
           <!-- Content Header (Page header) -->
           <section class="content-header">
             <h1>
-              <a class="btn btn-lg btn-warning" href="home.php">Back</a>
+              <a class="btn btn-lg btn-warning" href="newEnquiry.php">Back</a>
               
             </h1>
             <ol class="breadcrumb">
@@ -50,34 +50,51 @@ javascript:window.history.forward(1);
           <!-- Main content -->
           <section class="content">
             <div class="row">
-	      <div class="col-md-9">
+	      <div class="col-md-10">
               <div class="box box-primary">
                 <div class="box-header">
-                  <h3 class="box-title">Sales Transaction</h3>
+                  <h3 class="box-title">Enquiry Details</h3>
                 </div>
                 <div class="box-body">
                   <!-- Date range -->
                   <form method="post" action="transaction_add.php">
 				  <div class="row" style="min-height:400px">
 					
-					 <div class="col-md-6">
+					 <div class="col-md-4">
 						  <div class="form-group">
-							<label for="date">Product Name</label>
+							<label for="date">Part No.</label>
 							 
-								<select class="form-control select2" name="prod_name" tabindex="1" autofocus required>
+								<select class="form-control select2" name="part_no" tabindex="1" autofocus required>
 								<?php
                   $branch=$_SESSION['branch'];
-                  $cid=$_REQUEST['cid'];
+                  $sid=$_REQUEST['sid'];
 								  include('../dist/includes/dbcon.php');
-									 $query2=mysqli_query($con,"select * from parts where branch_id='$branch' order by part_name")or die(mysqli_error());
+									 $query2=mysqli_query($con,"select * from parts where branch_id='$branch' order by part_no")or die(mysqli_error());
 									    while($row=mysqli_fetch_array($query2)){
 								?>
-										<option value="<?php echo $row['part_id'];?>"><?php echo $row['part_name']." Available(".$row['part_qty'].")";?></option>
+										<option value="<?php echo $row['part_id'];?>"><?php echo 'No: '. $row['part_no'].' | '. $row['part_name']." Available(".$row['part_qty'].")";?></option>
 								  <?php }?>
 								</select>
-						    <input type="hidden" class="form-control" name="cid" value="<?php echo $cid;?>" required>   
+						    <input type="hidden" class="form-control" name="cid" value="<?php echo $sid;?>" required>   
 						  </div><!-- /.form group -->
 					</div>
+         <div class="col-md-2">
+						  <div class="form-group">
+							<label for="date">Order Type</label>
+							 
+								<select class="form-control select3" name="order_type" tabindex="" autofocus required>
+							<?php
+                  $branch=$_SESSION['branch'];
+                  $sid=$_REQUEST['sid'];
+								
+									 $query3=mysqli_query($con,"select * from order_type where branch_id='$branch' order by order_type_id")or die(mysqli_error());
+									    while($row1=mysqli_fetch_array($query3)){
+								?>
+										<option value="<?php echo $row1['order_type_id'];?>"><?php echo $row1['order_type'];?></option>
+								  <?php }?>
+								</select>
+						  </div>
+					</div> 
 					<div class=" col-md-2">
 						<div class="form-group">
 							<label for="date">Quantity</label>
@@ -96,28 +113,23 @@ javascript:window.history.forward(1);
 					</form>	
 					</div>
 					<div class="col-md-12">
-<?php 
-$queryb=mysqli_query($con,"select balance from customer where cust_id='$cid'")or die(mysqli_error());
-     $rowb=mysqli_fetch_array($queryb);
-        $balance=$rowb['balance'];
 
-        if ($balance>0) $disabled="disabled=true";else{$disabled="";}
-?>
                   <table class="table table-bordered table-striped">
                     <thead>
                       <tr>
                         <th>Qty</th>
-						       
-                        <th>Product Name</th>
-						            <th>Price</th>
-						            <th>Total</th>
+                        <th>img</th>
+                        <th>Part No.</th>
+                        <th>Part Name</th>
+                        <th>Order Type</th>
+                        <th>Date of Enq.</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
 <?php
 		
-		$query=mysqli_query($con,"select * from temp_trans natural join product where branch_id='$branch'")or die(mysqli_error());
+		$query=mysqli_query($con,"select * from enquiry natural join parts natural join supplier where branch_id='$branch'")or die(mysqli_error());
 			$grand=0;
 		while($row=mysqli_fetch_array($query)){
 				$id=$row['temp_trans_id'];
@@ -127,9 +139,9 @@ $queryb=mysqli_query($con,"select balance from customer where cust_id='$cid'")or
 ?>
                       <tr >
 						<td><?php echo $row['qty'];?></td>
-                        <td class="record"><?php echo $row['prod_name'];?></td>
-						<td><?php echo number_format($row['price'],2);?></td>
-						<td><?php echo number_format($total,2);?></td>
+            <td><img style="width:80px;height:60px" src="<?php echo URLROOT;?>/dist/uploads/<?php echo $row['part_pic'];?>"></td>
+            <td class="record"><?php echo $row['part_no'];?></td>
+                        <td class="record"><?php echo $row['part_name'];?></td>
                         <td>
 							
 							<a href="#updateordinance<?php echo $row['temp_trans_id'];?>" data-target="#updateordinance<?php echo $row['temp_trans_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-edit text-blue"></i></a>
@@ -203,68 +215,41 @@ $queryb=mysqli_query($con,"select balance from customer where cust_id='$cid'")or
                
                   
                   
+
 				</form>	
+
+                </div><!-- /.box-body -->
+                
+              </div><!-- /.box -->
+            </div><!-- /.col (right) -->
+            <div class="col-md-2">
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Preview Enq.</h3>
+                </div>
+                <div class="box-body">
+                                                 
+                  <div class="form-group">
+                    <div class="input-group col-md-12">
+                      <button class="btn btn-lg btn-primary pull-right" id="daterange-btn" name="">
+                     Print Preview
+                      </button>
+           
+                    </div>
+                  </div><!-- /.form group -->
+      
+        
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col (right) -->
             
-            <div class="col-md-3">
-              <div class="box box-primary">
-               
-                <div class="box-body">
-                  <!-- Date range -->
-          <form method="post" name="autoSumForm" action="sales_add.php">
-				  <div class="row">
-					 <div class="col-md-12">
-						  
-						  <div class="form-group">
-							<label for="date">Total</label>
-							
-								<input type="text" style="text-align:right" class="form-control" id="total" name="total" placeholder="Total" 
-								value="<?php echo $grand;?>" onFocus="startCalc();" onBlur="stopCalc();"  tabindex="5" readonly>
-							
-						  </div><!-- /.form group -->
-						  <div class="form-group">
-							<label for="date">Discount</label>
-							
-								<input type="text" class="form-control text-right" id="discount" name="discount" value="0" tabindex="6" placeholder="Discount (Php)" onFocus="startCalc();" onBlur="stopCalc();">
-							<input type="hidden" class="form-control text-right" id="cid" name="cid" value="<?php echo $cid;?>">
-						  </div><!-- /.form group -->
-						  <div class="form-group">
-							<label for="date">Amount Due</label>
-							
-								<input type="text" style="text-align:right" class="form-control" id="amount_due" name="amount_due" placeholder="Amount Due" value="<?php echo number_format($grand,2);?>" readonly>
-							
-						  </div><!-- /.form group -->
-              
-						 
-              <div class="form-group" id="tendered">
-                <label for="date">Cash Tendered</label><br>
-                <input type="text" style="text-align:right" class="form-control" onFocus="startCalc();" onBlur="stopCalc();"  id="cash" name="tendered" placeholder="Cash Tendered" value="0">
-              </div><!-- /.form group -->
-              <div class="form-group" id="change">
-                <label for="date">Change</label><br>
-                <input type="text" style="text-align:right" class="form-control" id="changed" name="change" placeholder="Change">
-              </div><!-- /.form group -->
-					</div>
-					
-					
+            
 
-				</div>	
-               
-                  
-                 
-                      <button class="btn btn-lg btn-block btn-primary" id="daterange-btn" name="cash" type="submit"  tabindex="7">
-                        Complete Sales
-                      </button>
-					  <button class="btn btn-lg btn-block" id="daterange-btn" type="reset"  tabindex="8">
-                        <a href="cancel.php">Cancel Sale</a>
-                      </button>
-              
-				</form>	
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-            </div><!-- /.col (right) -->
+          </section><!-- /.content -->
+        </div><!-- /.container -->
+           
+            
+        
 			
 			
           </div><!-- /.row -->
