@@ -105,6 +105,12 @@ $branch=$_SESSION['branch'];
                         <th><u></u></th>
                       </tr>
                       <tr>
+                        <th>Supplier:</th>
+                        <th><u><?php echo '';?></u></th>
+                        <th>Due Date</th>
+                        <th></th>
+                      </tr>
+                      <tr>
                         <th>Supplier Account:</th>
                         <th><u><?php echo '';?></u></th>
                         <th>Due Date</th>
@@ -118,6 +124,7 @@ $branch=$_SESSION['branch'];
                       </tr>
                     </thead>
                   </table>
+                  <br>
  <form method="post" action="transaction_add.php">	
                  
                    <table class="table" style="border: solid 1px #000">
@@ -155,7 +162,11 @@ $branch=$_SESSION['branch'];
 					<?php 
 						}
 					?>
-					<tr>
+					
+			</tbody>
+      </table>
+      <table>
+			<tr>
 						<th>Prepared by:</th>
 						<th></th>
 						<th></th>
@@ -171,9 +182,8 @@ $branch=$_SESSION['branch'];
            <tr>
            <th><?php echo $row['name'];?><th>
            </tr>
-			</tbody>
-			
-		  </table>
+           </table>
+	
 		  
 		</div><!-- /.box-body -->
 		</div>  
