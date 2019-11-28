@@ -54,7 +54,7 @@ endif;
 	      <div class="col-md-10">
               <div class="box box-primary">
                 <div class="box-header">
-                  <h3 class="box-title">Enquiry Details - <?php echo $_POST["sname"]; ?></h3>
+                  <h3 class="box-title">Enquiry Details</h3>
                 </div>
                 <div class="box-body">
                   <!-- Date range -->
@@ -79,20 +79,20 @@ endif;
 						    <input type="hidden" class="form-control" name="cid" value="<?php echo $sid;?>" required>   
 						  </div><!-- /.form group -->
 					</div>
-					<div class="col-md-2">
+         <div class="col-md-2">
 						  <div class="form-group">
 							<label for="date">Order Type</label>
 							 
-								<select class="form-control select3" name="order_type" id="order_type" tabindex="" readonly>
-								<?php
-								  $order_type_id1 = $_POST["order_type"];
-												
-										 $query3=mysqli_query($con,"select * from order_type where order_type_id = '$order_type_id1'");
-											while($row1=mysqli_fetch_array($query3)){
-												$odtn = $row1["order_type"];
-											}	
-									?>
-									<option value="<?php echo $_POST["order_type"];?>"><?php echo $odtn;?></option>
+								<select class="form-control select3" name="order_type" id="order_type" tabindex="" autofocus required>
+							<?php
+						  $branch=$_SESSION['branch'];
+						  $sid=$_REQUEST['sid'];
+										
+								 $query3=mysqli_query($con,"select * from order_type where branch_id='$branch' order by order_type_id");
+									while($row1=mysqli_fetch_array($query3)){
+							?>
+									<option value="<?php echo $row1['order_type_id'];?>"><?php echo $row1['order_type'];?></option>
+							  <?php }?>
 								</select>
 						  </div>
 					</div> 
@@ -233,7 +233,7 @@ endif;
                                                  
                   <div class="form-group">
                     <div class="input-group col-md-12">
-                      <a href="../enquiry_receipt.php?sname=<?php echo $_POST["sname"]; ?>" class="btn btn-lg btn-primary pull-right" id="btnprint" name="">
+                      <a href="../enquiry_receipt.php" class="btn btn-lg btn-primary pull-right" id="btnprint" name="">
 						Print Preview
                       </a>
            

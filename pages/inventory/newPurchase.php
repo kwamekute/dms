@@ -112,50 +112,33 @@ endif;
                   <div class="form-group">
                     <label for="date">Search Supplier Name</label>
                     <div class="input-group col-md-12">
-                      <select class="form-control select2" style="width: 100%;" name="sid" id="sid" required>
+                      <select class="form-control select2" style="width: 100%;" name="sid" required>
                       <?php
                        include('../../dist/includes/dbcon.php');
                         $query2=mysqli_query($con,"select * from supplier where branch_id='$branch' order by supplier_name")or die(mysqli_error());
                           while($row2=mysqli_fetch_array($query2)){
-							  $sname = $row2['supplier_name']; 
                       ?>
-						<option value="<?php echo $row2['supplier_id'];?>"><?php echo $row2['supplier_name'].", ".$row2['supplier_address'];?></option>
-					  <?php }?>
-						</select>
-						</div><!-- /.input group -->
-						
-						<input type="text" value="<?php  echo $sname; ?>" name="sname" id="sname" hidden />
-						<br>
-						<br>   
-                 
-                </div>
-				 <div class="form-group">
-							<label for="date">Order Type</label>
-							 
-								<select class="form-control select3" name="order_type" id="order_type" tabindex="" autofocus required>
-							<?php
-						  $branch=$_SESSION['branch'];
-						  $sid=$_REQUEST['sid'];
-										
-								 $query3=mysqli_query($con,"select * from order_type where branch_id='$branch' order by order_type_id");
-									while($row1=mysqli_fetch_array($query3)){
-							?>
-									<option value="<?php echo $row1['order_type_id'];?>"><?php echo $row1['order_type'];?></option>
-							  <?php }?>
-								</select>
-						  </div>
-						  
-				  <div class="form-group">
+            <option value="<?php echo $row2['supplier_id'];?>"><?php echo $row2['supplier_name'].", ".$row2['supplier_address'];?></option>
+          <?php }?>
+                    </select>
+                    </div><!-- /.input group -->
+<br>
+<br>
+
+              
+      
+                  
+                  <div class="form-group">
                     <div class="input-group col-md-12">
                       <button class="btn btn-lg btn-primary pull-right" id="daterange-btn" name="">
                         Search
                       </button>
            
                     </div>
-                  </div><!-- /.form group -->  
-						  
-				<!-- /.box-body -->
-				</form> 
+                  </div><!-- /.form group -->
+        </form> 
+        
+                </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col (right) -->
             

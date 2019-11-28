@@ -56,53 +56,19 @@ endif;
     </style>
  </head>
   <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
-  <body class="hold-transition skin-blue layout-top-nav">
-    <div class="wrapper">
-      
-      <!-- Full Width Column -->
-      <div class="content-wrapper">
-        <div class="container">
+<body class="hold-transition skin-blue layout-top-nav">
+<div class="wrapper">
+  
+  <!-- Full Width Column -->
+  <div class="content-wrapper">
+	<div class="container">
 
-          <section class="content">
-            <div class="row">
-	      <div class="col-md-12">
-
-              <div class="col-md-12">
-                <div class="col-md-12">
-        <div class="box box-primary angel">
-        <div class="box-header">
-          <h3 class="box-title">Select Date</h3>
-        </div>
-        <div class="box-body">
-        
-          <!-- /.form group -->
-          <form method="post">
-          <div class="form-group col-md-6">
-            <label>Date range:</label>
-
-            <div class="input-group">
-              <div class="input-group-addon">
-              <i class="fa fa-calendar"></i>
-              </div>
-            <input type="text" name="date" class="form-control pull-right active" id="reservation" required>
-          </div>
-                <!-- /.input group -->
-          </div>
-              <!-- /.form group --><br>
-          <button type="submit" class="btn btn-primary" name="display">Display</button>
-        </form>
-        
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->       
-        </div>
-              </div>
-                
-                <div class="box-body">
-
-                  <!-- Date range -->
-                  <form method="post" action="transaction_add.php">
+	  <section class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="box-body">
+			  <!-- Date range -->
+			  <form method="post" action="transaction_add.php">
 <?php
 include('../dist/includes/dbcon.php');
 
@@ -138,64 +104,62 @@ if (isset($_POST['display']))
                     </tr>    
 <?php
 		$query=mysqli_query($con,"select * from purchase_request natural join product natural join supplier where branch_id='$branch' and purchase_status='pending' and date(request_date)>='$start' and date(request_date)<='$end' ")or die(mysqli_error($con));
-    		while($row=mysqli_fetch_array($query)){
-  
+    		while($row=mysqli_fetch_array($query)){  
 ?>
-                      <tr>
-            						<td><?php echo $row['serial'];?></td>
-                        <td class="record"><?php echo $row['prod_name'];?></td>
-            						<td><?php echo $row['qty'];?></td>
-            						<td><?php echo $row['supplier_name'];?></td>
-                        <td><?php echo $row['request_date'];?></td>
-                                    
-                      </tr>
-					  
+				<tr>
+					<td><?php echo $row['serial'];?></td>
+					<td class="record"><?php echo $row['prod_name'];?></td>
+					<td><?php echo $row['qty'];?></td>
+					<td><?php echo $row['supplier_name'];?></td>
+					<td><?php echo $row['request_date'];?></td>
+							
+				</tr>					  
 
-<?php }}?>					
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                      </tr> 
-                      <tr>
-                        <th>Prepared by:</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                      </tr> 
-<?php
-    $id=$_SESSION['id'];
-    $query=mysqli_query($con,"select * from user where user_id='$id'")or die(mysqli_error($con));
-    $row=mysqli_fetch_array($query);
- 
-?>                      
-                      <tr>
-                        <th><?php echo $row['name'];?></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                      </tr>   
-                    </tbody>
-                    
-                  </table>
-                </div><!-- /.box-body -->
-				</div>  
-				</form>	
-                </div><!-- /.box-body -->
-                <a class = "btn btn-success btn-print" href = "" onclick = "window.print()"><i class ="glyphicon glyphicon-print"></i> Print</a>
-                <a class = "btn btn-primary btn-print" href = "reorder.php"><i class ="glyphicon glyphicon-arrow-left"></i> Back to Reorder Page</a>
-              </div><!-- /.box -->
-            </div><!-- /.col (right) -->
-           
-          </div><!-- /.row -->
-	  
-             
-          </section><!-- /.content -->
-        </div><!-- /.container -->
-      </div><!-- /.content-wrapper -->
-     
-    </div><!-- ./wrapper -->
+				<?php }}?>					
+				<tr>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+				  </tr> 
+				  <tr>
+					<th>Prepared by:</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				  </tr> 
+				<?php
+					$id=$_SESSION['id'];
+					$query=mysqli_query($con,"select * from user where user_id='$id'")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+				 
+				?>                      
+				<tr>
+				<th><?php echo $row['name'];?></th>
+				<th></th>
+				<th></th>
+				<th></th>
+			  </tr>   
+			</tbody>
+			
+		  </table>
+		</div><!-- /.box-body -->
+		</div>  
+		</form>	
+		</div><!-- /.box-body -->
+		<a class = "btn btn-success btn-print" href = "" onclick = "window.print()"><i class ="glyphicon glyphicon-print"></i> Print</a>
+		<a class = "btn btn-primary btn-print" href = "reorder.php"><i class ="glyphicon glyphicon-arrow-left"></i> Back to Reorder Page</a>
+	  </div><!-- /.box -->
+	</div><!-- /.col (right) -->
+   
+  </div><!-- /.row -->
+
+	 
+  </section><!-- /.content -->
+</div><!-- /.container -->
+</div><!-- /.content-wrapper -->
+
+</div><!-- ./wrapper -->
 	
 	<script src="../plugins/jQuery/jQuery-2.2.0.min.js"></script>
   <!-- Bootstrap 3.3.6 -->
