@@ -79,12 +79,12 @@ endif;
                       </tr>
                     </thead>
                     <tbody>
-					<?php
-							
-							$query=mysqli_query($con,"select * from parts natural join supplier natural join category where branch_id='$branch' and part_qty<=reorder order by part_name")or die(mysqli_error());
-							while($row=mysqli_fetch_array($query)){
-							
-					?>
+<?php
+		
+		$query=mysqli_query($con,"select * from parts natural join supplier natural join category where branch_id='$branch' and part_qty<=reorder order by part_name")or die(mysqli_error());
+		while($row=mysqli_fetch_array($query)){
+		
+?>
                       <tr>
                         <td><?php echo $row['part_no'];?></td>
                         <td><?php echo $row['part_name'];?></td>
