@@ -11,7 +11,7 @@ endif;
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Home | <?php include('../dist/includes/title.php');?></title>
+    <title>Purchase Enquiry  | <?php include('../dist/includes/title.php');?></title>
        <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -68,20 +68,67 @@ endif;
 			<div class="col-md-12">
 				<div class="box-body">
 			  <!-- Date range -->
-			  <form method="post" action="transaction_add.php">			
-                  <h5><b><?php echo "branch name";?></b> </h5>  
-                  <h6><?php echo "branch address";?></h6>
+			 	
+        <?php
+include('../dist/includes/dbcon.php');
+
+$branch=$_SESSION['branch'];
+    $query1=mysqli_query($con,"select * from branch where branch_id='$branch'")or die(mysqli_error());
+  
+        $row1=mysqli_fetch_array($query1);
+
+    
+        
+?>		
+
+<table class="table">
+<h2 class="text-center"><b><?php echo  $row1['branch_name'];?></b> </h2>  
+                  <h6><?php echo $row1['motto'];?></h6>
+                  <h6><?php echo $row1['branch_address'];?></h6>
                   <h6>Contact #: <?php echo "branch contact";?></h6>
-                  <h6>Date <?php echo date("M d, Y");?> Time <?php echo date("h:i A");?></h6>
-                  <hr>
-                   <table class="table">
+
+                  <hr style="height:2px;border:none;background-color:#333;"/>
+                  <h3 class="text-center">Purchase Enquiry</h3>
+                  
+                    <thead>    
+                      <tr>
+                        <th colspan="3"><h6><?php echo '';?></h6></th>
+                        <th><span style="font-size: 16px;color: red">Enquiry No. <?php echo '';?></span></th>
+                      </tr>                    
+                    </thead>
                     <thead>
-                    <tr>
-                      <th>Product Code</th>
-                      <th>Product Name</th>
+
+                      <tr>
+                        <th>Order Type: <?php echo '     '.' '.' Stock';?> </th>
+                        <th ><u></u></th>
+                        <th>Order date:</th>
+                        <th><u></u></th>
+                      </tr>
+                      <tr>
+                        <th>Supplier Account:</th>
+                        <th><u><?php echo '';?></u></th>
+                        <th>Due Date</th>
+                        <th></th>
+                      </tr>
+                      <tr>
+                        <th>Address:</th>
+                        <th></th>
+                        <th>Terms</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                  </table>
+ <form method="post" action="transaction_add.php">	
+                 
+                   <table class="table" style="border: solid 1px #000">
+                    <thead>
+                    <tr >
+                      <th>Part Number</th>
+                      <th>Description</th>
+                      <th>Bin Location</th>
                       <th>Quantity</th>
-                      <th>Supplier Name</th>
-                      <th>Date Requested</th>
+                      <th>Unit Cost</th>
+                      <th>Total</th>
                     </tr> 
 					</thead>
 					<tbody>
@@ -100,9 +147,10 @@ endif;
 					<tr>
 						<td><?php echo $row["part_no"]; ?></td>
 						<td><?php echo $row["part_name"]; ?></td>
+            <td><?php echo 'NAV'?></td>
 						<td><?php echo $row["qty"]; ?></td>
 						<td><?php echo $_GET["sname"]; ?></td>
-						<td><?php echo $row["date"]; ?></td>
+						<td></td>
 					</tr> 
 					<?php 
 						}
@@ -113,6 +161,16 @@ endif;
 						<th></th>
 						<th></th>
 					 </tr> 
+           <?php
+           include('../dist/includes/dbcon.php');
+           $id1 =  $_SESSION['id'];	
+    $query=mysqli_query($con,"select * from user where user_id='$id1'")or die(mysqli_error($con));
+    $row=mysqli_fetch_array($query);
+ 
+?>       
+           <tr>
+           <th><?php echo $row['name'];?><th>
+           </tr>
 			</tbody>
 			
 		  </table>

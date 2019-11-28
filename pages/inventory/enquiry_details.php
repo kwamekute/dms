@@ -54,7 +54,14 @@ endif;
 	      <div class="col-md-10">
               <div class="box box-primary">
                 <div class="box-header">
-                  <h3 class="box-title">Enquiry Details - <?php echo $_POST["sname"]; ?></h3>
+                  <h3 class="box-title">Enquiry Details </h3>
+                  <br>
+                  <hr>
+                  <h3 class="box-title">Supplier - <?php echo $_POST["sname"]; ?></h3>
+                  <br>
+                  <hr>
+                  <h3 class="box-title">Order Type - <?php echo $_POST["otype"]; ?></h3>
+
                 </div>
                 <div class="box-body">
                   <!-- Date range -->
