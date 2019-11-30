@@ -71,6 +71,7 @@ endif;
                         <th>ORDER TYPE</th>
 						<th>Parts</th>
             			<th>ENQUIRY DATE</th>
+                  <th>Due DATE</th>
 						<th>Action</th>
                       </tr>
                     </thead>
@@ -89,6 +90,7 @@ endif;
                         <td><?php echo $row['order_type'];?></td>
 						<td><?php echo $row['nop'];?></td>
             			<td><?php echo $row['enquiry_date'];?></td>
+                  <td><?php echo 'Date Due Appears Here';?></td>
 
                         <td>
 							<a id="btnview" name="btnview" data-id="<?php echo $row['enqid'];?>" class="btn btn-primary">View</a>	

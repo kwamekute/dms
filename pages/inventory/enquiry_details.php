@@ -56,11 +56,19 @@ endif;
                 <div class="box-header">
                   <h3 class="box-title">Enquiry Details </h3>
                   <br>
+                  <?php
+								  $order_type_id1 = $_POST["order_type"];
+												
+										 $query3=mysqli_query($con,"select * from order_type where order_type_id = '$order_type_id1'");
+											while($row1=mysqli_fetch_array($query3)){
+												$odtn = $row1["order_type"];
+											}	
+									?>
                   <hr>
-                  <h3 class="box-title">Supplier - <?php echo $_POST["sname"]; ?></h3>
+                  <h3 class="box-title">Supplier - <?php echo $_POST["sid"]; ?></h3>
                   <br>
                   <hr>
-                  <h3 class="box-title">Order Type - <?php echo $_POST["otype"]; ?></h3>
+                  <h3 class="box-title">Order Type - <?php echo $odtn; ?></h3>
 
                 </div>
                 <div class="box-body">
