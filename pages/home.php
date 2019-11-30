@@ -74,8 +74,8 @@ endif;
                         <!-- small box -->
                         <div class="small-box bg-orange">
                           <div class="inner">
-                            <h3>Sales Ledger</h3>
-                            <p>Sales/ Account Receivables</p>
+                            <h3>Financials</h3>
+                            <p>General Ledgers/Payments</p>
                           </div>
                           <div class="icon" style="margin-top:10px">
                             <i class="glyphicon glyphicon-usd"></i>

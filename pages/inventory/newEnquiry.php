@@ -125,8 +125,7 @@ endif;
 						</div><!-- /.input group -->
 						
 						<input type="text" value="<?php  echo $sname; ?>" name="sname" id="sname" hidden />
-						<br>
-						<br>   
+					 	  
                  
                 </div>
 				 <div class="form-group">
@@ -139,11 +138,14 @@ endif;
 										
 								 $query3=mysqli_query($con,"select * from order_type where branch_id='$branch' order by order_type_id");
 									while($row1=mysqli_fetch_array($query3)){
+                    $oname = $row1['order_type'];
 							?>
 									<option value="<?php echo $row1['order_type_id'];?>"><?php echo $row1['order_type'];?></option>
+                  
 							  <?php }?>
 								</select>
 						  </div>
+              <input type="text" value="<?php  echo $oname; ?>" name="otype" id="sname" hidden />
 						  
 				  <div class="form-group">
                     <div class="input-group col-md-12">
