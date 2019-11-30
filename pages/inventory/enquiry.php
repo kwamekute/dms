@@ -33,6 +33,7 @@ endif;
  </head>
   <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
   <body class="hold-transition skin-<?php echo $_SESSION['skin'];?> layout-top-nav">
+  <?php include "modals.php"; ?>
     <div class="wrapper">
       <?php include('../../dist/includes/header.php');?>
       <!-- Full Width Column -->
@@ -65,97 +66,37 @@ endif;
                 <div class="box-body">
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
-                      <tr>
-                      
-                        <th>Product Code</th>
-                        <th>Product Name</th>
-						            <th>Supplier</th>
-                        <th>Qty</th>
-            						<th>Price</th>
-            						<th>Category</th>
-            						<th>Reorder</th>
-            
-                        <th>Action</th>
+                      <tr>             
+                        <th>ENQUIRY ID</th>
+                        <th>ORDER TYPE</th>
+						<th>Parts</th>
+            			<th>ENQUIRY DATE</th>
+						<th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
 					<?php
-							
-							$query=mysqli_query($con,"select * from parts natural join supplier natural join category where branch_id='$branch' and part_qty<=reorder order by part_name")or die(mysqli_error());
-							while($row=mysqli_fetch_array($query)){
+						$sqle = "Select enquiry.enqid, enquiry.enquiry_date, COUNT(DISTINCT(enquiry.part_id)) AS nop, 
+								 order_type.order_type from enquiry
+								 LEFT JOIN order_type ON enquiry.order_type_id = order_type.order_type_id 
+								 GROUP BY enquiry.enqid";	
+						$query=mysqli_query($con,$sqle);
+						while($row=mysqli_fetch_array($query)){
 							
 					?>
                       <tr>
-                        <td><?php echo $row['part_no'];?></td>
-                        <td><?php echo $row['part_name'];?></td>
-						            <td><?php echo $row['supplier_name'];?></td>
-                        <td><?php echo $row['part_qty'];?></td>
-            						<td><?php echo number_format($row['part_price'],2);?></td>
-            						<td><?php echo $row['cat_name'];?></td>
-            						<td><?php echo $row['reorder'];?></td>
+                        <td><?php echo $row['enqid'];?></td>
+                        <td><?php echo $row['order_type'];?></td>
+						<td><?php echo $row['nop'];?></td>
+            			<td><?php echo $row['enquiry_date'];?></td>
 
                         <td>
-				<a href="#updateordinance<?php echo $row['prod_id'];?>" data-target="#updateordinance<?php echo $row['prod_id'];?>" data-toggle="modal" class="btn btn-primary">Request Purchase</a>
-			
+							<a id="btnview" name="btnview" data-id="<?php echo $row['enqid'];?>" class="btn btn-primary">View</a>	
 						</td>
           </tr>
-<div id="updateordinance<?php echo $row['prod_id'];?>" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-	<div class="modal-dialog">
-	  <div class="modal-content" style="height:auto">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Request Purchase</h4>
-              </div>
-              <div class="modal-body">
-			  <form class="form-horizontal" method="post" action="purchase_add.php" enctype='multipart/form-data'>
-        <div class="form-group">
-          <label class="control-label col-lg-3" for="price">Product Code</label>
-          <div class="col-lg-9">
-            <input type="text" class="form-control" id="price" name="serial" value="<?php echo $row['serial'];?>" readonly>  
-          </div>
-        </div>
-                
-				<div class="form-group">
-					<label class="control-label col-lg-3" for="name">Product Name</label>
-					<div class="col-lg-9"><input type="hidden" class="form-control" id="id" name="id" value="<?php echo $row['prod_id'];?>" required>  
-					  <input type="text" class="form-control" id="name" name="prod_name" value="<?php echo $row['prod_name'];?>" readonly>  
-					</div>
-				</div> 
-				<div class="form-group">
-					<label class="control-label col-lg-3" for="file">Supplier</label>
-					<div class="col-lg-9">
-              <input type="text" class="form-control" id="name" name="prod_name" value="<?php echo $row['supplier_name'];?>" readonly>  
-					</div>
-				</div> 
-				
-				<div class="form-group">
-					<label class="control-label col-lg-3" for="price">Price</label>
-					<div class="col-lg-9">
-					  <input type="text" class="form-control" id="price" name="prod_price" value="<?php echo $row['prod_price'];?>" readonly>  
-					</div>
-				</div>
-				
-				
-        <div class="form-group">
-          <label class="control-label col-lg-3" for="price">Quantity</label>
-          <div class="col-lg-9">
-            <input type="number" class="form-control" id="price" name="reorder">  
-          </div>
-        </div>
-				<br><br><br><br><br><br><br><br>
-              </div>
-              <div class="modal-footer">
-		<button type="submit" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-			  </form>
-            </div>
-			
-        </div><!--end of modal-dialog-->
- </div>
- <!--end of modal-->                    
-<?php }?>					  
+		  <?php }?>
+                   
+					  
                     </tbody>
                   
                   </table>
@@ -187,6 +128,7 @@ endif;
     <script src="../../dist/js/demo.js"></script>
     <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="../../plugins/datatables/dataTables.bootstrap.min.js"></script>
+	<script src="../js/enquiry.js"></script>
     
     <script>
       $(function () {

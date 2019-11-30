@@ -19,4 +19,22 @@ $(document).ready(function(event){
 		
 	});
 	
+	$("#btnview").click(function(event){
+		event.preventDefault();
+		var enqid = $("#btnview").data("id");
+		//alert(enqid);
+		
+		$.ajax({
+			url:'getenquirylist.php',
+			type:'post',
+			data:{enqid:enqid},
+			success:function(response){
+				$("#enqid").val(enqid);
+				$("#enqlist").html(response);
+				$("#updateordinance").modal("show");
+			}
+		});
+		
+	});
+	
 });

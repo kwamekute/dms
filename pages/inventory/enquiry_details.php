@@ -130,11 +130,11 @@ endif;
                     <tbody>
 					<?php
 					
-					$query=mysqli_query($con,"Select temp_trans.temp_trans_id, temp_trans.qty, temp_trans.part_id, 
-										temp_trans.order_type_id, temp_trans.date, parts.part_name, parts.part_no, order_type.order_type 
-										from temp_trans  
-										LEFT JOIN parts ON temp_trans.part_id = parts.part_id
-										LEFT JOIN order_type ON temp_trans.order_type_id = order_type.order_type_id");
+				$query=mysqli_query($con,"Select temp_trans.temp_trans_id, temp_trans.qty, temp_trans.part_id, 
+									temp_trans.order_type_id, temp_trans.date, parts.part_name, parts.part_no, order_type.order_type 
+									from temp_trans  
+									LEFT JOIN parts ON temp_trans.part_id = parts.part_id
+									LEFT JOIN order_type ON temp_trans.order_type_id = order_type.order_type_id");
 						$grand=0;
 					while($row=mysqli_fetch_array($query)){
 							$id=$row['temp_trans_id'];

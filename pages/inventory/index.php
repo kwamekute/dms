@@ -93,7 +93,7 @@ endif;
                        <div class="icon" style="margin-top:10px">
                          <i class="glyphicon glyphicon-shopping-cart"></i>
                        </div>
-                       <a href="stockin.php" class="small-box-footer">
+                       <a href="../stockin.php" class="small-box-footer">
                          Go <i class="fa fa-arrow-circle-right"></i>
                        </a>
                      </div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2019 at 06:43 PM
+-- Generation Time: Nov 30, 2019 at 09:26 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -395,9 +395,8 @@ CREATE TABLE `purchase_request` (
 --
 
 INSERT INTO `purchase_request` (`pr_id`, `prod_id`, `qty`, `request_date`, `branch_id`, `purchase_status`) VALUES
-(1, 13, 40, '2019-11-21', 1, 'pending'),
-(2, 16, 20, '2019-11-21', 1, 'pending'),
-(4, 1, 5, '2019-11-25', 5, 'pending');
+(7, 2, 5, '2019-11-30', 0, 'pending'),
+(8, 1, 5, '2019-11-30', 0, 'pending');
 
 -- --------------------------------------------------------
 
@@ -763,7 +762,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `purchase_request`
 --
 ALTER TABLE `purchase_request`
-  MODIFY `pr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `pr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `sales`
