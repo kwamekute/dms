@@ -117,6 +117,22 @@ endif;
                           </a>
                         </div>
                       </div>
+
+                      <div class="col-lg-6 col-xs-8">
+                        <!-- small box -->
+                        <div class="small-box bg-green">
+                          <div class="inner">
+                            <h3>Business Intell.</h3>
+                            <p>Data Visualizations</p>
+                          </div>
+                          <div class="icon" style="margin-top:10px">
+                            <i class="glyphicon glyphicon-stats"></i>
+                          </div>
+                          <a href="bi/index.php" class="small-box-footer">
+                            Go <i class="fa fa-arrow-circle-right"></i>
+                          </a>
+                        </div>
+                      </div>
                       <!-- 
                       
                       <div class="col-lg-4 col-xs-6">
